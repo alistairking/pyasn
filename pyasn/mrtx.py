@@ -279,10 +279,10 @@ class MrtRecord:
             mrt.detail = MrtTD1Record(buf, mrt.sub_type, optimize_parse)
         elif mrt.type == MrtRecord.TYPE_TABLE_DUMP_V2:
             # only allow these types
-            assert mrt.sub_type in (MrtRecord.T2_PEER_INDEX,
+            if mrt.sub_type in (MrtRecord.T2_PEER_INDEX,
                                     MrtRecord.T2_RIB_IPV4,
-                                    MrtRecord.T2_RIB_IPV6)
-            mrt.detail = MrtTD2Record(buf, mrt.sub_type, optimize_parse)
+                                    MrtRecord.T2_RIB_IPV6):
+                mrt.detail = MrtTD2Record(buf, mrt.sub_type, optimize_parse)
         else:
             raise Exception("MrtTableHeader got an unknown MRT table dump TYPE <%d>!" % mrt.type)
         return mrt
